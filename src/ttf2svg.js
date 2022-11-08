@@ -85,6 +85,17 @@ function glyphFooter() {
 </svg>`;
 }
 
+function* toCodePoints(words) {
+  for (let i = 0; i < words.length; i++) {
+    const codePoint = words.codePointAt(i);
+    yield codePoint;
+    if (codePoint >> 16)
+      i++;
+    if (codePoint >> 24)
+      i++;
+  }
+}
+
 function toSVGFont(font, targetGlyphs) {
   return glyphHeader(font) + toGlyphTag(font, targetGlyphs) + glyphFooter();
 }
@@ -109,10 +120,10 @@ function ttf2svg(ttfPath, words) {
       const glyph = font.charToGlyph(words);
       return toSVG(font, glyph);
     } else {
-      const glyphs = words.split("")
-        .map((word) => {
+      const glyphs = [...toCodePoints(words)]
+        .map((codePoint) => {
+          const word = String.fromCodePoint(codePoint);
           const targetGlyph = font.charToGlyph(word);
-          const codePoint = word.codePointAt(0);
           const glyph = new opentype.Glyph({
             // name: word,
             unicode: codePoint,
