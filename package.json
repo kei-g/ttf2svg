@@ -19,5 +19,8 @@
   "dependencies": {
     "opentype.js": "^1.3.4",
     "svgpath": "^2.5.0"
+  },
+  "scripts": {
+    "test": "bin/ttf2svg /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf $(cat test.txt) > test.svg"
   }
 }
