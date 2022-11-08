@@ -1,6 +1,6 @@
 {
   "name": "@kei-g/ttf2svg",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "kei-g <km.8k6ce+github@gmail.com>",
   "description": "Convert TTF to SVG.",
   "license": "MIT",
