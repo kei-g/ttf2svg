@@ -2,11 +2,27 @@
 
 const ttf2svg = require("../src/ttf2svg");
 
-const ttfPath = process.argv[2];
-const word = process.argv[3];
+const arguments = process.argv.slice(2);
+const opts = {};
+while (arguments.length) {
+  const arg = arguments.shift();
+  switch (arg) {
+    case '--no-upside-down':
+      opts.noUpsideDown = true;
+      break;
+    default:
+      if (opts.words)
+        opts.words += arg;
+      else if (opts.ttfPath)
+        opts.words = arg;
+      else
+        opts.ttfPath = arg;
+      break;
+  }
+}
 
-if (3 <= process.argv.length && process.argv.length <= 4) {
-  console.log(ttf2svg(ttfPath, word));
+if (opts.ttfPath) {
+  console.log(ttf2svg(opts));
 } else {
-  console.log("Usage: ttf2svg ttfPath [words]");
+  console.log("Usage: ttf2svg [options] ttfPath [words]");
 }

@@ -21,6 +21,6 @@
     "svgpath": "^2.5.0"
   },
   "scripts": {
-    "test": "bin/ttf2svg /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf $(cat test.txt) > test.svg"
+    "test": "bin/ttf2svg --no-upside-down /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf $(cat test.txt) > test.svg"
   }
 }
