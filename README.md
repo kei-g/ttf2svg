@@ -1,11 +1,11 @@
-# @marmooo/ttf2svg
+# @kei-g/ttf2svg
 
 Convert TTF to SVG.
 
 ## Install
 
 ```
-npm install @marmooo/ttf2svg -g
+npm install @kei-g/ttf2svg -g
 ```
 
 ## Usage

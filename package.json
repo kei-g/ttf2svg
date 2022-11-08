@@ -1,17 +1,17 @@
 {
-  "name": "@marmooo/ttf2svg",
+  "name": "@kei-g/ttf2svg",
   "version": "0.0.4",
-  "author": "marmooo",
+  "author": "kei-g <km.8k6ce+github@gmail.com>",
   "description": "Convert TTF to SVG.",
   "license": "MIT",
-  "homepage": "https://github.com/marmooo/ttf2svg",
+  "homepage": "https://github.com/kei-g/ttf2svg",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marmooo/ttf2svg.git"
+    "url": "https://github.com/kei-g/ttf2svg.git"
   },
   "main": "src/ttf2svg.js",
   "bugs": {
-    "url": "https://github.com/marmooo/ttf2svg/issues"
+    "url": "https://github.com/kei-g/ttf2svg/issues"
   },
   "bin": {
     "ttf2svg": "bin/ttf2svg"
