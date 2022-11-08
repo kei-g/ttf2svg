@@ -17,10 +17,11 @@ ${copyright}
   return svg;
 }
 
-function toSVG(font, glyph) {
+function toSVG(font, glyph, opts) {
   const d = svgpath(glyph.path.toPathData())
-    .scale(1, -1)
-    .translate(0, font.ascender)
+    .translate(0, opts.noUpsideDown ? font.ascender : 0)
+    .scale(1, opts.noUpsideDown ? 1 : -1)
+    .translate(0, opts.noUpsideDown ? -font.ascender : font.ascender)
     .toString();
   if (d == "") return undefined;
   const path = `<path d="${d}"/>`;
@@ -96,15 +97,16 @@ function* toCodePoints(words) {
   }
 }
 
-function toSVGFont(font, targetGlyphs) {
-  return glyphHeader(font) + toGlyphTag(font, targetGlyphs) + glyphFooter();
+function toSVGFont(font, targetGlyphs, opts) {
+  return glyphHeader(font) + toGlyphTag(font, targetGlyphs, opts) + glyphFooter();
 }
 
-function toGlyphTag(font, glyphs) {
+function toGlyphTag(font, glyphs, opts) {
   return glyphs.map((glyph) => {
     const d = svgpath(glyph.path.toPathData())
-      .scale(1, -1)
-      .translate(0, font.ascender)
+      .translate(0, opts.noUpsideDown ? font.ascender : 0)
+      .scale(1, opts.noUpsideDown ? 1 : -1)
+      .translate(0, opts.noUpsideDown ? -font.ascender : font.ascender)
       .toString();
     if (d == "") return undefined;
     return `<glyph glyph-name="&#${glyph.unicode};" unicode="&#${glyph.unicode};"
@@ -113,14 +115,14 @@ function toGlyphTag(font, glyphs) {
   }).filter((glyph) => glyph).join("\n");
 }
 
-function ttf2svg(ttfPath, words) {
-  const font = opentype.loadSync(ttfPath);
-  if (words) {
-    if (words.length == 1) {
-      const glyph = font.charToGlyph(words);
-      return toSVG(font, glyph);
+function ttf2svg(opts) {
+  const font = opentype.loadSync(opts.ttfPath);
+  if (opts.words) {
+    if (opts.words.length == 1) {
+      const glyph = font.charToGlyph(opts.words);
+      return toSVG(font, glyph, opts);
     } else {
-      const glyphs = [...toCodePoints(words)]
+      const glyphs = [...toCodePoints(opts.words)]
         .map((codePoint) => {
           const word = String.fromCodePoint(codePoint);
           const targetGlyph = font.charToGlyph(word);
@@ -133,7 +135,7 @@ function ttf2svg(ttfPath, words) {
           });
           return glyph;
         });
-      return toSVGFont(font, glyphs);
+      return toSVGFont(font, glyphs, opts);
     }
   } else {
     // TODO: multiple missing-glyphs
@@ -145,7 +147,7 @@ function ttf2svg(ttfPath, words) {
         targetGlyphs.push(glyph);
       }
     });
-    return toSVGFont(font, targetGlyphs);
+    return toSVGFont(font, targetGlyphs, opts);
   }
 }
 
