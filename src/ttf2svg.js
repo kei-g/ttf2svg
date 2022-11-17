@@ -92,8 +92,6 @@ function* toCodePoints(words) {
     yield codePoint;
     if (codePoint >> 16)
       i++;
-    if (codePoint >> 24)
-      i++;
   }
 }
 
